@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Homemade+Apple&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Syne+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="mainBG">
+        <div class="panel split">
+             <button onClick="displayDiv('bio')"><img class="button" src="images/bio.png"></button>
+            <p>bio</p>
+            <a href="#exp"><img class="button" src="images/experience.png"></a>
+            <p>experience</p>
+        </div>
+        <div class="panel split">
+            <div class="title">About me!</div>
+            <div class="photo-swap">
+                <div class="inner-swap">
+                    <img id="front" src="images/meid.png">
+                    <img id="hover" src="images/catid.png">
+                </div>  
+            </div>
+            <div id="bio" class="hidden"><pre>
+Me llamo Metzli, tengo 21 años y soy estudiante 
+de Ciencias Computacionales en CETYS Universidad. 
+Me apasiona la danza, disfruto de tejer, leer 
+y tomar matcha con mi novio. 
+            </pre></div>
+        </div>
+       <div class="panel split">
+            <a href="https://www.instagram.com/moon.celee/" target="_blank" rel="noopener noreferrer"><img class="button" src="images/insta.png"></a>
+            <p>instagram</p>
+            <a href="https://github.com/metzlicel" target="_blank" rel="noopener noreferrer"><img class="button" src="images/git.png"></a>
+            <p>git</p>
+
+       </div>
+    </div>
+
+    <div id="exp" class="hidden">
+        <div class="title">Mi experiencia!</div>
+        <div class="panel split-row">
+            <div class="split">
+                <a href="https://www.cetys.mx/noticias/estudiantes-ganan-2do-y-3er-lugar-en-h4ckathon-2023-de-ios-lab/?fbclid=IwY2xjawMPuGVleHRuA2FlbQIxMQABHsVw04Qo_4MyYSQb_SHR8B37DiTyz6kcjLzZT9PtduYX81DOw-aiGSWpjb8V_aem_tAQn81vMUkpZNBNQYA_iaw" target="_blank" rel="noopener noreferrer"><img class="pic" src="images/hack1.png"></a>
+                <p>2do lugar nacional H4CK4THON 2023</p>
+            </div>
+            <div class="split">
+                <a href="https://www.sandiegored.com/es/noticias/245112/Estudiantes-tijuanenses-ganan-concurso-internacional-de-Apple-con-app-para-buscar-perritos-extraviados/" target="_blank" rel="noopener noreferrer"><img class="pic" src="images/hack2.png"></a>
+                <p>1er lugar internacional AIML Nanochallenge 2023 por Apple</p>
+            </div> 
+        </div>
+
+        <div class="panel split-row">
+            <div class="split">
+                 <a href="https://www.cetys.mx/noticias/alumnas-de-12-universidades-participan-en-femcoding-2023-programa-para-impulsar-la-igualdad-de-genero/" target="_blank" rel="noopener noreferrer"><img class="pic" src="images/hack3.png"></a>
+                <p>2do lugar nacional FemCoding Challenge 2023</p>
+            </div>
+           <div class="split">
+               <a href="https://www.facebook.com/photo/?fbid=738663804952165&set=a.491056316379583&locale=es_LA" target="_blank" rel="noopener noreferrer"><img class="pic" src="images/hack4.png"></a>
+                <p>1er lugar nacional MACC 2023</p>
+           </div>
+        
+        </div>
+        <div class="panel split-row">
+            <div class="split">
+                <a href="https://www.cetys.mx/noticias/alumna-de-cetys-tijuana-ganan-1er-y-3er-lugar-con-apps-innovadoras-para-atender-ods11/?fbclid=IwY2xjawMPuR5leHRuA2FlbQIxMABicmlkETFVZGR3YmJUOWJZOEZNUWp4AR7hjGqvFTGOc1V76ay6G4JEgLcPJuOOeA2kwECnX4-GlkFq59CRUu3kWwpImQ_aem_FjkXlI8Y4Mfx_uWEtTAQIQ" target="_blank" rel="noopener noreferrer"><img class="pic" src="images/hack5.png"></a>
+                <p>1er lugar nacional Changemakers Social Challenge 2024</p>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script src="button.js"></script>
+
+</body>
+</html>
