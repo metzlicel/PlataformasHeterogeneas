@@ -1,0 +1,13 @@
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/bin/Debug/net8.0/static/index.html
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/bin/Debug/net8.0/WebPlatformServer.deps.json
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/bin/Debug/net8.0/WebPlatformServer.dll
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/bin/Debug/net8.0/WebPlatformServer.pdb
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.AssemblyInfoInputs.cache
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.AssemblyInfo.cs
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.csproj.CoreCompileInputs.cache
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.sourcelink.json
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.dll
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/refint/WebPlatformServer.dll
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/WebPlatformServer.pdb
+/Users/metzliceleste/RiderProjects/cetys-icc-hetplat/3.Server/WebPlatformServer/WebPlatformServer/obj/Debug/net8.0/ref/WebPlatformServer.dll

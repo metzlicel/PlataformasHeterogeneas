@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "WebPlatformServer.ConsoleRunner/1.0.0": {
+        "dependencies": {
+          "WebPlatformServer": "1.0.0"
+        },
+        "runtime": {
+          "WebPlatformServer.ConsoleRunner.dll": {}
+        }
+      },
+      "WebPlatformServer/1.0.0": {
+        "runtime": {
+          "WebPlatformServer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebPlatformServer.ConsoleRunner/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebPlatformServer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
