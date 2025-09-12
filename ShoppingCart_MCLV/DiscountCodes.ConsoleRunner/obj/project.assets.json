@@ -1,0 +1,94 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "DiscountCodes/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/DiscountCodes.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DiscountCodes.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DiscountCodes/1.0.0": {
+      "type": "project",
+      "path": "../DiscountCodes/DiscountCodes.csproj",
+      "msbuildProject": "../DiscountCodes/DiscountCodes.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "DiscountCodes >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/metzliceleste/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/metzliceleste/Downloads/ludanortmun cetys-icc-hetplat main 5.DynamicSites-StrategyPatternShowcase/DiscountCodes.ConsoleRunner/DiscountCodes.ConsoleRunner.csproj",
+      "projectName": "DiscountCodes.ConsoleRunner",
+      "projectPath": "/Users/metzliceleste/Downloads/ludanortmun cetys-icc-hetplat main 5.DynamicSites-StrategyPatternShowcase/DiscountCodes.ConsoleRunner/DiscountCodes.ConsoleRunner.csproj",
+      "packagesPath": "/Users/metzliceleste/.nuget/packages/",
+      "outputPath": "/Users/metzliceleste/Downloads/ludanortmun cetys-icc-hetplat main 5.DynamicSites-StrategyPatternShowcase/DiscountCodes.ConsoleRunner/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/metzliceleste/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/Users/metzliceleste/Downloads/ludanortmun cetys-icc-hetplat main 5.DynamicSites-StrategyPatternShowcase/DiscountCodes/DiscountCodes.csproj": {
+              "projectPath": "/Users/metzliceleste/Downloads/ludanortmun cetys-icc-hetplat main 5.DynamicSites-StrategyPatternShowcase/DiscountCodes/DiscountCodes.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/Users/metzliceleste/.dotnet/sdk/8.0.413/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

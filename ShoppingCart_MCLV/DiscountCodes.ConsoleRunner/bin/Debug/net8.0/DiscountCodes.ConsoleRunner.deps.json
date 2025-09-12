@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "DiscountCodes.ConsoleRunner/1.0.0": {
+        "dependencies": {
+          "DiscountCodes": "1.0.0"
+        },
+        "runtime": {
+          "DiscountCodes.ConsoleRunner.dll": {}
+        }
+      },
+      "DiscountCodes/1.0.0": {
+        "runtime": {
+          "DiscountCodes.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DiscountCodes.ConsoleRunner/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DiscountCodes/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
