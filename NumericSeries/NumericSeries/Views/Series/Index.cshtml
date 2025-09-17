@@ -6,3 +6,10 @@
 <p>
     The number at the position @Model.N in the @Model.Series number series is <strong>@Model.Result</strong>.
 </p>
+<div style="display:flex; gap:1rem;">
+    @if (!string.IsNullOrEmpty(Model.NumAnterior))
+    {
+        <a href="@Model.NumAnterior">◀︎ Anterior</a>
+    }
+    <a href="@Model.NumSiguiente">Siguiente ▶︎</a>
+</div>

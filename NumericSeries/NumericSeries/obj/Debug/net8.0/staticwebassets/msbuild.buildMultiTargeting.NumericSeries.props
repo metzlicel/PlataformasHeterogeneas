@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/NumericSeries.props" />
+</Project>

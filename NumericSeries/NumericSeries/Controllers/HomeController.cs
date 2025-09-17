@@ -15,9 +15,11 @@ namespace NumericSeries.Controllers
 
         public IActionResult Index()
         {
+            
             return Redirect("series/natural/0");
         }
-
+        
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
