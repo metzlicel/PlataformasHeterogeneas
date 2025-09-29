@@ -1,31 +1,235 @@
-﻿@model IEnumerable<Blog.Models.Article>
+﻿@* ====== ANTES DE APLICARLE DISEÑO !! ========
+ 
+@* @model IEnumerable<Blog.Models.Article> *@
+@* *@
+@* @{ *@
+@*     ViewData["Title"] = "Blog"; *@
+@* *@
+@*   string? authorEmail = null; *@
+@*   DateTimeOffset? startDate = null; *@
+@*   DateTimeOffset? endDate = null; *@
+@* } *@
+@* *@
+@* <h1>Published Articles</h1> *@
+@* *@
+@* <form class="row row-cols-lg-auto g-3 align-items-center" asp-action="Index" method="get"> *@
+@*     <div class="col-12"> *@
+@*         <label class="visually-hidden" *@
+@*                asp-for="@startDate">Start date</label> *@
+@*         <input class="form-control" *@
+@*                type="date" asp-for="@startDate" /> *@
+@*     </div> *@
+@*     <div class="col-12"> *@
+@*         <label class="visually-hidden" *@
+@*                asp-for="@endDate">End date</label> *@
+@*         <input class="form-control" *@
+@*                type="date" asp-for="@endDate" /> *@
+@*     </div> *@
+@*     <div class="col-12"> *@
+@*         <button class="btn btn-primary" type="submit">Filter</button> *@
+@*     </div> *@
+@* </form> *@
+@* *@
+@* <table> *@
+@*     <thead> *@
+@*     <tr> *@
+@*         <th>Title</th> *@
+@*         <th>Author</th> *@
+@*         <th>Publish date</th> *@
+@*     </tr> *@
+@*     </thead> *@
+@*     <tbody> *@
+@*     @{ *@
+@*         foreach (Article art in Model) *@
+@*         { *@
+@*             <tr> *@
+@*                 <td>@art.Title</td> *@
+@*                 <td>@art.AuthorName</td> *@
+@*                 <td>@art.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")</td> *@
+@*                 <td><a asp-action="Details" asp-route-id="@art.Id">See comments</a></td> *@
+@*             </tr> *@
+@*         } *@
+@* *@
+@*     } *@
+@*     </tbody> *@
+@* </table> *@
 
-@{
-    ViewData["Title"] = "Blog";
 
-    string? authorEmail = null;
-    DateTimeOffset? startDate = null;
-    DateTimeOffset? endDate = null;
-}
+@* ======= DESPUES DEL DISEÑO CON AYUDA DE CHAT =======*@
 
-<h1>Published Articles</h1>
+@model IEnumerable<Blog.Models.Article>
+   
+   @{
+       ViewData["Title"] = "Blog";
+       DateTimeOffset? startDate = Context.Request.Query.ContainsKey("startDate")
+           ? DateTimeOffset.TryParse(Context.Request.Query["startDate"], out var sd) ? sd : null
+           : null;
+   
+       DateTimeOffset? endDate = Context.Request.Query.ContainsKey("endDate")
+           ? DateTimeOffset.TryParse(Context.Request.Query["endDate"], out var ed) ? ed : null
+           : null;
+   
+       var results = Model?.ToList() ?? new List<Blog.Models.Article>();
+   }
+   
+   <style>
+    .page-title {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
 
-<form class="row row-cols-lg-auto g-3 align-items-center" asp-action="Index" method="get">
-    <div class="col-12">
-        <label class="visually-hidden"
-               asp-for="@startDate">Start date</label>
-        <input class="form-control"
-               type="date" asp-for="@startDate" />
-    </div>
-    <div class="col-12">
-        <label class="visually-hidden"
-               asp-for="@endDate">End date</label>
-        <input class="form-control"
-               type="date" asp-for="@endDate" />
-    </div>
-    <div class="col-12">
-        <button class="btn btn-primary" type="submit">Filter</button>
-    </div>
-</form>
+    .filter-card {
+        border: 1px solid #e9ecef;
+        box-shadow: 0 4px 14px rgba(16,24,40,.06);
+        border-radius: 16px;
+    }
 
-TODO: Render existing articles
+    .table thead th {
+        position: sticky; top: 0; background: #fff; z-index: 1;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .badge-date {
+        font-weight: 500;
+        background: #eef2ff; color: #3b5bdb;
+    }
+
+    .muted {
+        color: #6c757d;
+    }
+
+    .truncate {
+        max-width: 420px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .empty-state {
+        border: 1px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 28px;
+        background: linear-gradient(180deg,#fafafa, #ffffff);
+    }
+
+    /* 💜 Botones personalizados */
+    .btn-purple {
+        background-color: #8c6cd9; /* tono lavanda suave */
+        border-color: #8c6cd9;
+        color: white;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .btn-purple:hover {
+        background-color: #7b5cc6;
+        border-color: #7b5cc6;
+        color: white;
+    }
+
+    .btn-outline-purple {
+        border-color: #8c6cd9;
+        color: #8c6cd9;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-purple:hover {
+        background-color: #8c6cd9;
+        color: white;
+    }
+</style>
+
+   
+   <div class="container py-4">
+       <div class="d-flex align-items-end justify-content-between mb-3">
+           <div>
+               <h1 class="page-title display-5 mb-1">Published Articles</h1>
+               <div class="muted">
+                   @if (startDate.HasValue || endDate.HasValue)
+                   {
+                       <span class="badge badge-date rounded-pill me-2 px-3 py-2">
+                           @((startDate?.ToString("yyyy-MM-dd") ?? "…")) → @((endDate?.ToString("yyyy-MM-dd") ?? "…"))
+                       </span>
+                   }
+                   <span>@results.Count result(s)</span>
+               </div>
+           </div>
+       </div>
+   
+       <!-- Filtros -->
+       <div class="card filter-card mb-4">
+           <div class="card-body">
+               <form class="row g-3 align-items-end" asp-action="Index" method="get">
+                   <div class="col-12 col-md-4">
+                       <label for="startDate" class="form-label">Start date</label>
+                       <input id="startDate" name="startDate" type="date"
+                              value="@(startDate?.ToString("yyyy-MM-dd"))"
+                              class="form-control" />
+                   </div>
+                   <div class="col-12 col-md-4">
+                       <label for="endDate" class="form-label">End date</label>
+                       <input id="endDate" name="endDate" type="date"
+                              value="@(endDate?.ToString("yyyy-MM-dd"))"
+                              class="form-control" />
+                   </div>
+                   <div class="col-12 col-md-4 d-flex gap-2">
+                       <button class="btn btn-purple flex-grow-1" type="submit">Filter</button>
+                       <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                   </div>
+               </form>
+           </div>
+       </div>
+   
+       @if (!results.Any())
+       {
+           <div class="empty-state text-center">
+               <h5 class="mb-1">No hay artículos para mostrar</h5>
+               <p class="muted mb-0">Ajusta el rango de fechas o crea un nuevo artículo.</p>
+           </div>
+       }
+       else
+       {
+           <div class="table-responsive">
+               <table class="table table-hover align-middle">
+                   <thead class="table-light">
+                   <tr>
+                       <th style="width: 44px;">#</th>
+                       <th>Title</th>
+                       <th style="width: 220px;">Author</th>
+                       <th style="width: 220px;">Publish date</th>
+                       <th style="width: 160px;"></th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   @{
+                       var row = 0;
+                       foreach (var art in results)
+                       {
+                           row++;
+                           <tr>
+                               <td class="text-muted">@row</td>
+                               <td class="truncate" title="@art.Title">@art.Title</td>
+                               <td>
+                                   <div class="fw-semibold">@art.AuthorName</div>
+                                   <div class="small text-muted">@art.AuthorEmail</div>
+                               </td>
+                               <td>
+                                   <span class="badge bg-light text-dark border">
+                                       @art.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")
+                                   </span>
+                               </td>
+                               <td class="text-end">
+                                   <a asp-action="Details" asp-route-id="@art.Id" class="btn btn-sm btn-outline-purple">
+                                       See comments
+                                   </a>
+                               </td>
+                           </tr>
+                       }
+                   }
+                   </tbody>
+               </table>
+           </div>
+       }
+   </div>
+   

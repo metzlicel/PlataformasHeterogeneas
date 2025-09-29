@@ -6,12 +6,65 @@
 
 <h1>Details</h1>
 
-TODO: Render article
+<pre class="text-muted mb-4">
+Created by: <strong>@Model.Article.AuthorName</strong>
+On: @Model.Article.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")
+Contact: <a href="mailto:@Model.Article.AuthorEmail">@Model.Article.AuthorEmail</a>
+</pre>
 
+<style>
+    
+    /* 💜 Botones personalizados */
+    .btn-purple {
+        background-color: #8c6cd9; /* tono lavanda suave */
+        border-color: #8c6cd9;
+        color: white;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .btn-purple:hover {
+        background-color: #7b5cc6;
+        border-color: #7b5cc6;
+        color: white;
+    }
+
+</style>
+
+<p>@Model.Article.Content</p>
+
+<hr />
 <h2>Comments</h2>
 
-TODO: Add comment form
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>
+                <p>@comment.Content</p>
+                <small class="text-muted">
+                    Publicado el @comment.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")
+                </small>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">No hay comentarios todavía.</p>
+}
 
-<br />
+<hr />
+<h2>Add a comment!</h2>
 
-TODO: Render comments
+<form asp-action="AddComment" asp-controller="Articles" asp-route-articleId="@Model.Article.Id" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Article.Content" class="form-label">Contenido</label>
+        <textarea id="Content" name="Content" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-purple">Publish comment</button>
+</form>

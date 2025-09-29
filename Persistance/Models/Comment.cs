@@ -1,4 +1,6 @@
-﻿namespace Blog.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blog.Models
 {
     public class Comment
     {
@@ -10,6 +12,7 @@
         /// <summary>
         /// The content of the comment.
         /// </summary>
+        [Required]
         public string Content { get; set; }
 
         /// <summary>

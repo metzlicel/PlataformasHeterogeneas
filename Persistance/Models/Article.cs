@@ -1,4 +1,6 @@
-﻿namespace Blog.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blog.Models
 {
     /// <summary>
     /// Represents a blog article
@@ -18,14 +20,15 @@
         /// <summary>
         /// The email of the author who wrote the article.
         /// </summary>
+        [EmailAddress]
         public string AuthorEmail { get; set; }
 
         /// <summary>
         /// The title of the article. Specified by the user.
         /// It is limited to 100 characters.
         /// </summary>
+        [StringLength(maximumLength: 100)]
         public string Title { get; set; }
-
         /// <summary>
         /// The full content of the article. 
         /// </summary>

@@ -1,5 +1,50 @@
-﻿@{
+﻿@model Blog.Models.Article
+
+@{
     ViewData["Title"] = "Create Article";
 }
 
+<style>
+    
+    /* 💜 Botones personalizados */
+    .btn-purple {
+        background-color: #8c6cd9; /* tono lavanda suave */
+        border-color: #8c6cd9;
+        color: white;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+    .btn-purple:hover {
+        background-color: #7b5cc6;
+        border-color: #7b5cc6;
+        color: white;
+    }
+
+</style>
+
 <h1>Create Article</h1>
+
+<form action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div>
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="AuthorName">Created by:</label>
+        <input asp-for="AuthorName" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="AuthorEmail">Email:</label>
+        <input asp-for="AuthorEmail" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Content">Content</label>
+        <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-purple">Publish article</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

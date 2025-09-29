@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@* _Layout.cshtml *@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,42 +8,98 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Blog.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+    <style>
+    /* === NAVBAR PERSONALIZADA === */
+    .navbar-gradient {
+        background: linear-gradient(90deg, #6b4dc7 0%, #8b6ccf 50%, #a285db 100%);
+    }
+
+    .navbar-brand, .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+        color: #f4ebff !important;
+    }
+
+    .navbar-toggler {
+        border-color: rgba(255,255,255,0.4);
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1);
+    }
+
+    /* Botón de nuevo artículo */
+    .btn-new-article {
+        background-color: #fff;
+        color: #6b4dc7;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-new-article:hover {
+        background-color: #efe8fa;
+        color: #593ab2;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #f7f4fb;
+        color: #5b3ea4;
+    }
+</style>
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-gradient shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Articles" asp-action="Index">Blog</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Articles" asp-action="Index">
+                    <i class="bi bi-journal-richtext me-2"></i> Blog
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarMain" aria-controls="navbarMain"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarMain">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Articles" asp-action="Index">Home</a>
                         </li>
-                        @* This invisible element ensures that new article link is at the end of the nav bar *@
-                        <span class="flex-fill"></span>
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Create">New Article</a>
+                            <a asp-area="" asp-controller="Articles" asp-action="Create"
+                               class="btn btn-new-article px-3 py-1 shadow-sm">
+                                + New Article
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container mt-4">
+        <main role="main" class="pb-4">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-center py-3 mt-auto">
         <div class="container">
-            &copy; 2025 - Blog
+            &copy; 2025 - Blog 💜
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
