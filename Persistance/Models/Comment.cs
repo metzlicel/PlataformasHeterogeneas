@@ -4,6 +4,7 @@ namespace Blog.Models
 {
     public class Comment
     {
+        public int CommentId { get; set; }
         /// <summary>
         /// The identifier of the article this comment belongs to.
         /// </summary>
@@ -19,5 +20,8 @@ namespace Blog.Models
         /// Represents the moment the comment was posted.
         /// </summary>
         public DateTimeOffset PublishedDate { get; set; }
+        
+        public Article Article { get; set; }
+
     }
 }

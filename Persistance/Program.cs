@@ -1,4 +1,5 @@
 using Blog.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog
 {
@@ -8,27 +9,13 @@ namespace Blog
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var dbCfg = builder.Configuration.GetSection("DatabaseConfig").Get<DatabaseConfig>()!;
+            builder.Services.AddDbContext<ArticleRepositoryContext>(opt =>
+                opt.UseSqlite(dbCfg.DefaultConnectionString));
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            var databaseConfig = builder.Configuration.GetSection("DatabaseConfig").Get<DatabaseConfig>();
-            if (databaseConfig!.UseInMemoryDatabase)
-            {
-                builder.Services.AddSingleton<IArticleRepository, MemoryArticleRepository>();
-            }
-            else
-            {
-                builder.Services.AddSingleton<IArticleRepository>(services =>
-                {
-                    var config = services.GetRequiredService<IConfiguration>();
-                    var repository = new ArticleRepository(databaseConfig);
-
-                    repository.EnsureCreated();
-
-                    return repository;
-                });
-            }
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -25,6 +25,17 @@
 @*         <input class="form-control" *@
 @*                type="date" asp-for="@endDate" /> *@
 @*     </div> *@
+
+@*      <div class="col-md-3"> *@
+@*          <label for="authorEmail" class="form-label">Author's email</label> *@
+@*          <input id="authorEmail" name="authorEmail" type="email" class="form-control" placeholder="autor@dominio.com" value="@(Request.Query["authorEmail"])" /> *@
+@*      </div> *@
+
+@*      <div class="col-md-3"> *@
+@*          <label for="title" class="form-label">Título</label> *@
+@*          <input id="title" name="title" type="text" class="form-control" value="@(Request.Query["title"])" /> *@
+@*      </div> *@
+
 @*     <div class="col-12"> *@
 @*         <button class="btn btn-primary" type="submit">Filter</button> *@
 @*     </div> *@
@@ -68,7 +79,14 @@
        DateTimeOffset? endDate = Context.Request.Query.ContainsKey("endDate")
            ? DateTimeOffset.TryParse(Context.Request.Query["endDate"], out var ed) ? ed : null
            : null;
-   
+       string? authorEmail = Context.Request.Query.ContainsKey("authorEmail")
+           ? (string?)Context.Request.Query["authorEmail"]
+           : null;
+
+       string? title = Context.Request.Query.ContainsKey("title")
+           ? (string?)Context.Request.Query["title"]
+           : null;
+       
        var results = Model?.ToList() ?? new List<Blog.Models.Article>();
    }
    
@@ -142,94 +160,115 @@
 
    
    <div class="container py-4">
-       <div class="d-flex align-items-end justify-content-between mb-3">
-           <div>
-               <h1 class="page-title display-5 mb-1">Published Articles</h1>
-               <div class="muted">
-                   @if (startDate.HasValue || endDate.HasValue)
-                   {
-                       <span class="badge badge-date rounded-pill me-2 px-3 py-2">
-                           @((startDate?.ToString("yyyy-MM-dd") ?? "…")) → @((endDate?.ToString("yyyy-MM-dd") ?? "…"))
-                       </span>
-                   }
-                   <span>@results.Count result(s)</span>
-               </div>
-           </div>
-       </div>
-   
-       <!-- Filtros -->
-       <div class="card filter-card mb-4">
-           <div class="card-body">
-               <form class="row g-3 align-items-end" asp-action="Index" method="get">
-                   <div class="col-12 col-md-4">
-                       <label for="startDate" class="form-label">Start date</label>
-                       <input id="startDate" name="startDate" type="date"
-                              value="@(startDate?.ToString("yyyy-MM-dd"))"
-                              class="form-control" />
-                   </div>
-                   <div class="col-12 col-md-4">
-                       <label for="endDate" class="form-label">End date</label>
-                       <input id="endDate" name="endDate" type="date"
-                              value="@(endDate?.ToString("yyyy-MM-dd"))"
-                              class="form-control" />
-                   </div>
-                   <div class="col-12 col-md-4 d-flex gap-2">
-                       <button class="btn btn-purple flex-grow-1" type="submit">Filter</button>
-                       <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
-                   </div>
-               </form>
-           </div>
-       </div>
-   
-       @if (!results.Any())
-       {
-           <div class="empty-state text-center">
-               <h5 class="mb-1">No hay artículos para mostrar</h5>
-               <p class="muted mb-0">Ajusta el rango de fechas o crea un nuevo artículo.</p>
-           </div>
-       }
-       else
-       {
-           <div class="table-responsive">
-               <table class="table table-hover align-middle">
-                   <thead class="table-light">
-                   <tr>
-                       <th style="width: 44px;">#</th>
-                       <th>Title</th>
-                       <th style="width: 220px;">Author</th>
-                       <th style="width: 220px;">Publish date</th>
-                       <th style="width: 160px;"></th>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   @{
-                       var row = 0;
-                       foreach (var art in results)
-                       {
-                           row++;
-                           <tr>
-                               <td class="text-muted">@row</td>
-                               <td class="truncate" title="@art.Title">@art.Title</td>
-                               <td>
-                                   <div class="fw-semibold">@art.AuthorName</div>
-                                   <div class="small text-muted">@art.AuthorEmail</div>
-                               </td>
-                               <td>
-                                   <span class="badge bg-light text-dark border">
-                                       @art.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")
-                                   </span>
-                               </td>
-                               <td class="text-end">
-                                   <a asp-action="Details" asp-route-id="@art.Id" class="btn btn-sm btn-outline-purple">
-                                       See comments
-                                   </a>
-                               </td>
-                           </tr>
-                       }
-                   }
-                   </tbody>
-               </table>
-           </div>
-       }
-   </div>
-   
+    <div class="d-flex align-items-end justify-content-between mb-3">
+        <div>
+            <h1 class="page-title display-5 mb-1">Published Articles</h1>
+            <div class="muted">
+                @if (startDate.HasValue || endDate.HasValue)
+                {
+                    <span class="badge badge-date rounded-pill me-2 px-3 py-2">
+                        @((startDate?.ToString("yyyy-MM-dd") ?? "…")) → @((endDate?.ToString("yyyy-MM-dd") ?? "…"))
+                    </span>
+                }
+                <span>@results.Count result(s)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card filter-card mb-4">
+        <div class="card-body">
+            <form class="row g-3 align-items-end" asp-action="Index" method="get">
+                <div class="col-12 col-md-3">
+                    <label for="startDate" class="form-label">Start date</label>
+                    <input id="startDate" name="startDate" type="date"
+                           value="@(startDate?.ToString("yyyy-MM-dd"))"
+                           class="form-control" />
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label for="endDate" class="form-label">End date</label>
+                    <input id="endDate" name="endDate" type="date"
+                           value="@(endDate?.ToString("yyyy-MM-dd"))"
+                           class="form-control" />
+                </div>
+
+                <!-- 🔹 nuevo: filtro por email exacto (case-insensitive en el controlador) -->
+                <div class="col-12 col-md-3">
+                    <label for="authorEmail" class="form-label">Author email (exact)</label>
+                    <input id="authorEmail" name="authorEmail" type="email"
+                           placeholder="author@domain.com"
+                           value="@(authorEmail ?? "")"
+                           class="form-control" />
+                </div>
+
+                <!-- 🔹 nuevo: filtro por título contiene (case-insensitive en el controlador) -->
+                <div class="col-12 col-md-3">
+                    <label for="title" class="form-label">Title (contains)</label>
+                    <input id="title" name="title" type="text"
+                           placeholder="words in title"
+                           value="@(title ?? "")"
+                           class="form-control" />
+                </div>
+
+                <div class="col-12 d-flex justify-content-between align-items-end mt-1">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-purple" type="submit">Filter</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!results.Any())
+    {
+        <div class="empty-state text-center">
+            <h5 class="mb-1">No hay artículos para mostrar</h5>
+            <p class="muted mb-0">Ajusta los filtros o crea un nuevo artículo.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 44px;">#</th>
+                        <th>Title</th>
+                        <th style="width: 220px;">Author</th>
+                        <th style="width: 220px;">Publish date</th>
+                        <th style="width: 160px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var row = 0;
+                        foreach (var art in results)
+                        {
+                            row++;
+                            <tr>
+                                <td class="text-muted">@row</td>
+                                <td class="truncate" title="@art.Title">@art.Title</td>
+                                <td>
+                                    <div class="fw-semibold">@art.AuthorName</div>
+                                    <div class="small text-muted">@art.AuthorEmail</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        @art.PublishedDate.LocalDateTime.ToString("yyyy-MM-dd HH:mm")
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-id="@art.Id" class="btn btn-sm btn-outline-purple">
+                                        See comments
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

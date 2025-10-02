@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Blog.Models
+﻿namespace Blog.Models
 {
     /// <summary>
     /// Represents a blog article
@@ -20,15 +18,14 @@ namespace Blog.Models
         /// <summary>
         /// The email of the author who wrote the article.
         /// </summary>
-        [EmailAddress]
         public string AuthorEmail { get; set; }
 
         /// <summary>
         /// The title of the article. Specified by the user.
         /// It is limited to 100 characters.
         /// </summary>
-        [StringLength(maximumLength: 100)]
         public string Title { get; set; }
+
         /// <summary>
         /// The full content of the article. 
         /// </summary>
@@ -38,5 +35,8 @@ namespace Blog.Models
         /// Represents the moment the article was published
         /// </summary>
         public DateTimeOffset PublishedDate { get; set; }
+        
+        public List<Comment> Comments { get; } = new();
+
     }
 }
