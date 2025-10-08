@@ -27,6 +27,7 @@ namespace OrderNotifications
 
             Console.WriteLine("Should send notification via Email and SMS");
             notificationService.NotifyOrderStatus(order);
+            Console.WriteLine("\n");
 
             var anotherOrder = new Order
             {
@@ -47,6 +48,7 @@ namespace OrderNotifications
 
             Console.WriteLine("Should send notification via Email and WhatsApp");
             notificationService.NotifyOrderStatus(anotherOrder);
+            Console.WriteLine("\n");
 
             var akOrder = new Order
             {
@@ -64,8 +66,9 @@ namespace OrderNotifications
                     },
                 }
             };
-            Console.WriteLine("Should send notification via Email only");
+            Console.WriteLine("Should not send any notifications");
             notificationService.NotifyOrderStatus(akOrder);
+            Console.WriteLine("\n");
 
             var mxOrderWithSmsPreference = new Order
             {
@@ -90,6 +93,7 @@ namespace OrderNotifications
 
             Console.WriteLine("Should send notification via Email, WhatsApp and SMS ");
             notificationService.NotifyOrderStatus(mxOrderWithSmsPreference);
+            Console.WriteLine("\n");
 
             var orderNoEmail = new Order
             {
@@ -113,6 +117,7 @@ namespace OrderNotifications
             };
             Console.WriteLine("Should send notification via SMS only");
             notificationService.NotifyOrderStatus(orderNoEmail);
+            Console.WriteLine("\n");
 
         }
     }

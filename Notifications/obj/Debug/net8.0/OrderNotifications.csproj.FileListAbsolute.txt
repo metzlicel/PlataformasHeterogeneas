@@ -1,0 +1,15 @@
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/bin/Debug/net8.0/OrderNotifications
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/bin/Debug/net8.0/OrderNotifications.deps.json
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/bin/Debug/net8.0/OrderNotifications.runtimeconfig.json
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/bin/Debug/net8.0/OrderNotifications.dll
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/bin/Debug/net8.0/OrderNotifications.pdb
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.GeneratedMSBuildEditorConfig.editorconfig
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.AssemblyInfoInputs.cache
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.AssemblyInfo.cs
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.csproj.CoreCompileInputs.cache
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.sourcelink.json
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.dll
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/refint/OrderNotifications.dll
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.pdb
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/OrderNotifications.genruntimeconfig.cache
+/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Notifications/obj/Debug/net8.0/ref/OrderNotifications.dll
