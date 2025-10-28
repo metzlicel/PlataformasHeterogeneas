@@ -1,6 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Pagina restringida";
 }
-<h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Protected"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+@model AuthWebPage.Models.User
+
+<h2>Bienvenido, @Model.Name!</h2>
+<p>Correo: @Model.Email</p>
+<p>Animal Favorito: @Model.FavAnimal</p>
+
+<form method="post" asp-controller="Auth" asp-action="Logout">
+    <button type="submit">Cerrar sesión</button>
+</form>

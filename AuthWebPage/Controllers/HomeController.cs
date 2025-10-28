@@ -1,31 +1,29 @@
-using System.Diagnostics;
+using AuthWebPage.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using AuthWebPage.Models;
 
-namespace AuthWebPage.Controllers;
-
-public class HomeController : Controller
+namespace YourApp.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly AppDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Index() => View();
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Privacy()
+        {
+            var auth = new SessionController(_context);
+            var user = auth.ValidateCurrentUser();
+
+            if (user == null)
+                return RedirectToAction("Login", "Auth");
+
+            return View(user);
+        }
     }
 }

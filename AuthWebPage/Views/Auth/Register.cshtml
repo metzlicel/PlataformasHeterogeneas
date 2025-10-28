@@ -1,0 +1,15 @@
+<h2>Registro de usuario</h2>
+<form method="post">
+    <label>Usuario:</label>
+    <input name="username" required /><br/>
+    <label>Contraseña:</label>
+    <input name="password" type="password" required /><br/>
+    <label>Nombre:</label>
+    <input name="name" required /><br/>
+    <label>Email:</label>
+    <input name="email" type="email" required /><br/>
+    <label>Animal Favorito:</label>
+    <input name="animal" required /><br/>
+    <button type="submit">Registrar</button>
+</form>
+<p style="color:red">@ViewBag.Error</p>
