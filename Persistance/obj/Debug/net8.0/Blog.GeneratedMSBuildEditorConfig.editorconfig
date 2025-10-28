@@ -25,6 +25,8 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Persistance
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
 [/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/Persistance/Views/Articles/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXJ0aWNsZXMvQ3JlYXRlLmNzaHRtbA==
