@@ -85,7 +85,7 @@ namespace AuthWebPage.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(string username, string password, string name, string email, string animal)
+        public IActionResult Register(string username, string password, string name, string email, string animal, DateTime date)
         {
             if (_context.Users.Any(u => u.Username == username))
             {
@@ -103,7 +103,8 @@ namespace AuthWebPage.Controllers
                 Salt = salt,
                 Name = name,
                 Email = email,
-                FavAnimal = animal
+                FavAnimal = animal,
+                BirthDate = date
             };
 
             _context.Users.Add(user);

@@ -29,7 +29,7 @@ namespace YourApp.Controllers
             if (session == null)
                 return View("AccessDenied");
 
-            if (DateTime.UtcNow - session.LastActivity > TimeSpan.FromMinutes(5)) 
+            if (DateTime.UtcNow - session.LastActivity > TimeSpan.FromSeconds(5)) 
             {
                 _context.Sessions.Remove(session);
                 _context.SaveChanges();
