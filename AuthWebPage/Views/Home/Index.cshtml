@@ -1,9 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+        Layout = "_Layout";
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Esta es una landing page</p>
-<pre>Click Privacy para sentirte exclusivo.</pre>
+<div class="d-flex flex-column align-items-center justify-content-center vh-100">
+
+    <div class="p-5 rounded-4 shadow-lg text-center"
+         style="background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255,255,255,0.3); max-width: 600px;">
+
+        <h1 class="display-4 fw-bold" style="color: black;">✨ Welcome ✨</h1>
+        <p class="lead mb-3" style="color:black;">
+            Esta es una <strong>landing page</strong> 
+        </p>
+
+        <pre class="mt-4 p-3 rounded-3"
+             style="background-color: rgba(0,0,0,0.05);
+                    color: black; border-left: 4px solid #f0abfc;">
+Click <strong>Privacy</strong> para sentirte exclusivo 💎
+        </pre>
+    </div>
 </div>

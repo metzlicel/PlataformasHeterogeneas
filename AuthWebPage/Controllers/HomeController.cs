@@ -1,6 +1,7 @@
 using AuthWebPage.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using AuthWebPage.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace YourApp.Controllers
 {
@@ -17,13 +18,31 @@ namespace YourApp.Controllers
 
         public IActionResult Privacy()
         {
-            var auth = new SessionController(_context);
-            var user = auth.ValidateCurrentUser();
+            // Leer cookie directamente desde el contexto actual
+            if (!Request.Cookies.TryGetValue("SessionId", out var sessionId))
+                return View("AccessDenied");
 
-            if (user == null)
-                return RedirectToAction("Login", "Auth");
+            var session = _context.Sessions
+                .Include(s => s.User)
+                .FirstOrDefault(s => s.SessionId == sessionId);
 
-            return View(user);
+            if (session == null)
+                return View("AccessDenied");
+
+            if (DateTime.UtcNow - session.LastActivity > TimeSpan.FromMinutes(5)) 
+            {
+                _context.Sessions.Remove(session);
+                _context.SaveChanges();
+                Response.Cookies.Delete("SessionId");
+                return View("AccessDenied");
+            }
+
+            session.LastActivity = DateTime.UtcNow;
+            _context.SaveChanges();
+
+            return View("Privacy", session.User);
         }
+
+
     }
 }

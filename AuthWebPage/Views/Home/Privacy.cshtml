@@ -1,14 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Pagina restringida";
+﻿@model AuthWebPage.Models.User
+@{
+    ViewData["Title"] = "Página restringida";
 }
-<h1>@ViewData["Protected"]</h1>
 
-@model AuthWebPage.Models.User
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100">
 
-<h2>Bienvenido, @Model.Name!</h2>
-<p>Correo: @Model.Email</p>
-<p>Animal Favorito: @Model.FavAnimal</p>
+    <div class="p-5 rounded-4 shadow-lg text-center"
+         style="background: rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255,255,255,0.4);
+                max-width: 600px; width: 90%;">
 
-<form method="post" asp-controller="Auth" asp-action="Logout">
-    <button type="submit">Cerrar sesión</button>
-</form>
+        <h1 class="fw-bold mb-4" style="color:#4c1d95;">🔒 Página restringida</h1>
+
+        <h2 class="mb-3 fw-semibold" style="color:#6d28d9;">
+            Bienvenido, @Model.Name!
+        </h2>
+
+        <div class="text-start mx-auto" style="max-width: 400px;">
+            <p class="mb-2" style="font-size:1.1rem;">
+                <strong>📧 Correo:</strong> @Model.Email
+            </p>
+            <p class="mb-2" style="font-size:1.1rem;">
+                <strong>🐾 Animal favorito:</strong> @Model.FavAnimal
+            </p>
+        </div>
+
+        <div class="mt-4">
+            <form method="post" asp-controller="Session" asp-action="Logout">
+                <button type="submit"
+                        class="btn fw-bold px-4 py-2"
+                        style="background-color:#a855f7;
+                               color:white;
+                               border-radius:12px;
+                               box-shadow:0 0 10px rgba(168,85,247,0.4);
+                               transition: all 0.3s ease;">
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+
+        <hr class="my-4" style="border-color:#e9d5ff;">
+
+        <p class="mb-0" style="color:#4c1d95;">
+            🌸 Gracias por usar AuthWebPage
+        </p>
+    </div>
+</div>

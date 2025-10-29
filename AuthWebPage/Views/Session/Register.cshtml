@@ -1,0 +1,72 @@
+@{
+    ViewBag.Title = "Registro de usuario";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center min-vh-100"
+     style="
+            padding-top: 60px; padding-bottom: 60px;">
+
+
+    <div class="p-5 rounded-4 shadow-lg text-center"
+         style="background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255,255,255,0.4);
+                max-width: 480px; width: 90%;
+                padding: 20px;">
+
+        <h2 class="fw-bold mb-4" style="color: #4c1d95;">🪄 Registro de usuario</h2>
+
+        <form method="post" class="text-start">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Usuario:</label>
+                <input name="username" required class="form-control"
+                       style="border-radius: 10px; border: 1px solid #c4b5fd;" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contraseña:</label>
+                <input name="password" type="password" required class="form-control"
+                       style="border-radius: 10px; border: 1px solid #c4b5fd;" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Nombre:</label>
+                <input name="name" required class="form-control"
+                       style="border-radius: 10px; border: 1px solid #c4b5fd;" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Email:</label>
+                <input name="email" type="email" required class="form-control"
+                       style="border-radius: 10px; border: 1px solid #c4b5fd;" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Animal favorito:</label>
+                <input name="animal" required class="form-control"
+                       style="border-radius: 10px; border: 1px solid #c4b5fd;" />
+            </div>
+
+            <button type="submit"
+                    class="btn w-100 mt-3 fw-bold"
+                    style="background-color: #a855f7; color: white; border-radius: 12px;">
+                Registrar
+            </button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <p class="mt-3 fw-semibold" style="color:#b91c1c;">@ViewBag.Error</p>
+        }
+
+        <hr class="my-4" style="border-color:#e9d5ff;">
+
+        <p class="mb-0" style="color:#4c1d95;">
+            ¿Ya tienes cuenta?
+            <a href="/Session/Login"
+               style="color:#7c3aed; font-weight:bold; text-decoration:none;">
+                Inicia sesión aquí
+            </a>
+        </p>
+    </div>
+</div>

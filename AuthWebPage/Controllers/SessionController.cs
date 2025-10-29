@@ -76,36 +76,13 @@ namespace AuthWebPage.Controllers
                 Response.Cookies.Delete("SessionId");
             }
         }
-
-        private User? GetUserFromSession()
-        {
-            if (!Request.Cookies.TryGetValue("SessionId", out var cookie))
-                return null;
-
-            var session = _context.Sessions
-                .Include(s => s.User)
-                .FirstOrDefault(s => s.SessionId == cookie);
-
-            if (session == null)
-                return null;
-
-            // Expiracion por inactividad
-            if (DateTime.UtcNow - session.LastActivity > TimeSpan.FromMinutes(5))
-            {
-                _context.Sessions.Remove(session);
-                _context.SaveChanges();
-                Response.Cookies.Delete("SessionId");
-                return null;
-            }
-
-            session.LastActivity = DateTime.UtcNow;
-            _context.SaveChanges();
-            return session.User;
-        }
-
+        
         // *** Views ******
         [HttpGet]
-        public IActionResult Register() => View();
+        public IActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Register(string username, string password, string name, string email, string animal)
@@ -165,8 +142,6 @@ namespace AuthWebPage.Controllers
             InvalidateSession();
             return RedirectToAction("Index", "Home");
         }
-
-        // metodo para validacion desde HomeController
-        public User? ValidateCurrentUser() => GetUserFromSession();
+        
     }
 }

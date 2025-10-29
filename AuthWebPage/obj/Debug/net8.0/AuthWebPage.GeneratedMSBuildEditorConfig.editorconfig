@@ -20,12 +20,8 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Auth/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9Mb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Auth/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9SZWdpc3Rlci5jc2h0bWw=
+[/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Home/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Home/Index.cshtml]
@@ -34,6 +30,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Session/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbi9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Session/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2Vzc2lvbi9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/metzliceleste/RiderProjects/PlataformasHeterogeneas/AuthWebPage/Views/Shared/Error.cshtml]
