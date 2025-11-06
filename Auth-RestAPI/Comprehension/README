@@ -1,0 +1,37 @@
+Para pruebas de funciones principales de la API en Swagger:
+
+* LOGIN, REGISTER
+/api/Auth/login
+/api/Auth/register
+
+- Ingresar credenciales y copiar Token
+- Click Authorize en la esquina derecha superior de Swagger
+- Agregar en Value: Bearer [Token copiado]
+- Click Authorize
+
+* POST NOTE
+/api/Notes
+
+- Click Try It Out
+- Editar title y string
+- Click execute
+Si esta authorized dejara publicar la nota
+
+* POST SHARE NOTE
+/api/Notes/{id}/share
+
+- Crear una cuenta de admin 
+- Authorize con el token de admin
+- Crear la nota y copiar Id de la nota
+- Crear una cuenta de colaborador y copiar su Id de User
+- Aun en la cuenta de admin, ingresar id de la nota, id del colaborador en targetUserId
+y editar el rol.
+""Nota compartida con usuario b6c1d59d... con rol write""
+
+* GET SHARED NOTE
+/api/Notes
+
+- Log in como el colaborador
+- Authorize con el token del colaborador
+- Click Execute
+- Podra ver la nota compartida
