@@ -1,4 +1,5 @@
-﻿using Comprehension.Data;
+﻿using Comprehension.Attributes;
+using Comprehension.Data;
 using Comprehension.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,103 +8,170 @@ namespace Comprehension.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeCustom]
     public class RemindersController : ControllerBase
     {
-        private readonly ComprehensionContext _context;
+        private readonly ComprehensionContext _db;
+        public RemindersController(ComprehensionContext db) => _db = db;
 
-        public RemindersController(ComprehensionContext context)
-        {
-            _context = context;
-        }
+        private User CurrentUser => (User)HttpContext.Items["User"]!;
 
         // GET: api/Reminders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reminder>>> GetReminder()
+        public async Task<ActionResult<IEnumerable<Reminder>>> GetReminders()
         {
-            return await _context.Reminder.ToListAsync();
+            var id = CurrentUser.Id;
+            var sharedIds = await _db.ResourceShares
+                .Where(s => s.TargetUserId == id && s.ResourceType == "Reminder")
+                .Select(s => s.ResourceId)
+                .ToListAsync();
+
+            return await _db.Reminder
+                .Where(r => r.UserId == id || sharedIds.Contains(r.Id))
+                .ToListAsync();
         }
 
-        // GET: api/Reminders/5
+        // GET: api/Reminders/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Reminder>> GetReminder(Guid id)
         {
-            var reminder = await _context.Reminder.FindAsync(id);
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound();
 
-            if (reminder == null)
-            {
-                return NotFound();
-            }
+            if (!HasAccess(reminder, "read")) return StatusCode(403, new { message = "Forbidden" });
 
             return reminder;
         }
 
-        // PUT: api/Reminders/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutReminder(Guid id, Reminder reminder)
-        {
-            // Ensures the ID is populated
-            if (reminder.Id == default)
-            {
-                reminder.Id = id;
-            }
-
-            if (id != reminder.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(reminder).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReminderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Reminders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Reminder>> PostReminder(Reminder reminder)
         {
-            _context.Reminder.Add(reminder);
-            await _context.SaveChangesAsync();
+            reminder.Id = Guid.NewGuid();
+            reminder.UserId = CurrentUser.Id;
 
-            return CreatedAtAction("GetReminder", new { id = reminder.Id }, reminder);
+            _db.Reminder.Add(reminder);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetReminder), new { id = reminder.Id }, reminder);
         }
 
-        // DELETE: api/Reminders/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReminder(Guid id)
+        // PUT: api/Reminders/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutReminder(Guid id, Reminder updated)
         {
-            var reminder = await _context.Reminder.FindAsync(id);
-            if (reminder == null)
-            {
-                return NotFound();
-            }
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound();
 
-            _context.Reminder.Remove(reminder);
-            await _context.SaveChangesAsync();
+            if (!HasAccess(reminder, "write")) return Forbid();
 
+            reminder.Message = updated.Message;
+            reminder.ReminderTime = updated.ReminderTime;
+            reminder.IsCompleted = updated.IsCompleted;
+
+            await _db.SaveChangesAsync();
             return NoContent();
         }
 
-        private bool ReminderExists(Guid id)
+        // DELETE: api/Reminders/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReminder(Guid id)
         {
-            return _context.Reminder.Any(e => e.Id == id);
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound();
+
+            if (!HasAccess(reminder, "admin")) return Forbid();
+
+            _db.Reminder.Remove(reminder);
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // POST: api/Reminders/{id}/share
+        [HttpPost("{id}/share")]
+        public async Task<IActionResult> ShareReminder(Guid id, [FromQuery] Guid targetUserId, [FromQuery] string role = "read")
+        {
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound("Recordatorio no encontrado");
+
+            if (reminder.UserId != CurrentUser.Id) return Forbid();
+
+            var existing = await _db.ResourceShares.FirstOrDefaultAsync(s =>
+                s.ResourceId == id && s.TargetUserId == targetUserId && s.ResourceType == "Reminder");
+
+            if (existing != null)
+                return Conflict("El usuario ya tiene acceso a este recordatorio");
+
+            var share = new SharedResource()
+            {
+                OwnerId = CurrentUser.Id,
+                TargetUserId = targetUserId,
+                ResourceId = id,
+                ResourceType = "Reminder",
+                Role = role
+            };
+
+            _db.ResourceShares.Add(share);
+            await _db.SaveChangesAsync();
+
+            return Ok($"Recordatorio compartido con usuario {targetUserId} con rol {role}");
+        }
+
+        // GET: api/Reminders/{id}/share
+        [HttpGet("{id}/share")]
+        public async Task<ActionResult<IEnumerable<SharedResource>>> GetSharedUsers(Guid id)
+        {
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound();
+
+            if (reminder.UserId != CurrentUser.Id) return Forbid();
+
+            return await _db.ResourceShares
+                .Where(s => s.ResourceId == id && s.ResourceType == "Reminder")
+                .ToListAsync();
+        }
+
+        // DELETE: api/Reminders/{id}/share/{targetUserId}
+        [HttpDelete("{id}/share/{targetUserId}")]
+        public async Task<IActionResult> RevokeShare(Guid id, Guid targetUserId)
+        {
+            var reminder = await _db.Reminder.FindAsync(id);
+            if (reminder == null) return NotFound("Recordatorio no encontrado");
+
+            if (reminder.UserId != CurrentUser.Id) return Forbid();
+
+            var share = await _db.ResourceShares.FirstOrDefaultAsync(s =>
+                s.ResourceId == id && s.TargetUserId == targetUserId && s.ResourceType == "Reminder");
+
+            if (share == null) return NotFound("No se encontró acceso compartido.");
+
+            _db.ResourceShares.Remove(share);
+            await _db.SaveChangesAsync();
+
+            return Ok($"Acceso revocado para el usuario {targetUserId}");
+        }
+
+        // Permisos
+        private bool HasAccess(Reminder reminder, string required)
+        {
+            if (reminder.UserId == CurrentUser.Id)
+                return true;
+
+            var share = _db.ResourceShares.FirstOrDefault(s =>
+                s.TargetUserId == CurrentUser.Id &&
+                s.ResourceId == reminder.Id &&
+                s.ResourceType == "Reminder");
+
+            if (share == null)
+                return false;
+
+            return required switch
+            {
+                "read" => true,
+                "write" => share.Role is "write" or "admin",
+                "admin" => share.Role == "admin",
+                _ => false
+            };
         }
     }
 }

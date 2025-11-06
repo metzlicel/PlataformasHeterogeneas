@@ -1,40 +1,63 @@
-﻿using Comprehension.Data;
+﻿using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Comprehension.Data;
+using Comprehension.Helpers;
 
-namespace Comprehension
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
 {
-    public class Program
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        public static void Main(string[] args)
+        Title = "Comprehension",
+        Version = "v1",
+        Description = "API de autenticación y productividad (notas, eventos, recordatorios)."
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Ingresa tu token en el formato: **Bearer {token}**"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<ComprehensionContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("ComprehensionContext") ?? throw new InvalidOperationException("Connection string 'ComprehensionContext' not found.")));
-
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            new OpenApiSecurityScheme
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
         }
-    }
+    });
+});
+
+builder.Services.AddDbContext<ComprehensionContext>(options =>
+    options.UseSqlite("Data Source=ComprehensionContext.db"));
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthMiddleware();
+
+app.MapControllers();
+
+app.Run();

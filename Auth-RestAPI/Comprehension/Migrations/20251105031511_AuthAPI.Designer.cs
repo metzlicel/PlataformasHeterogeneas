@@ -3,6 +3,7 @@ using System;
 using Comprehension.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Comprehension.Migrations
 {
     [DbContext(typeof(ComprehensionContext))]
-    partial class ComprehensionContextModelSnapshot : ModelSnapshot
+    [Migration("20251105031511_AuthAPI")]
+    partial class AuthAPI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -37,7 +40,7 @@ namespace Comprehension.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -93,7 +96,7 @@ namespace Comprehension.Migrations
                     b.Property<DateTime>("ReminderTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -107,6 +110,9 @@ namespace Comprehension.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("NoteId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("OwnerId")
@@ -127,6 +133,8 @@ namespace Comprehension.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
 
                     b.ToTable("ResourceShares");
                 });
@@ -162,13 +170,9 @@ namespace Comprehension.Migrations
 
             modelBuilder.Entity("Comprehension.Models.Event", b =>
                 {
-                    b.HasOne("Comprehension.Models.User", "User")
+                    b.HasOne("Comprehension.Models.User", null)
                         .WithMany("Events")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Comprehension.Models.Note", b =>
@@ -184,13 +188,21 @@ namespace Comprehension.Migrations
 
             modelBuilder.Entity("Comprehension.Models.Reminder", b =>
                 {
-                    b.HasOne("Comprehension.Models.User", "User")
+                    b.HasOne("Comprehension.Models.User", null)
                         .WithMany("Reminders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Comprehension.Models.SharedResource", b =>
+                {
+                    b.HasOne("Comprehension.Models.Note", null)
+                        .WithMany("SharedWith")
+                        .HasForeignKey("NoteId");
+                });
+
+            modelBuilder.Entity("Comprehension.Models.Note", b =>
+                {
+                    b.Navigation("SharedWith");
                 });
 
             modelBuilder.Entity("Comprehension.Models.User", b =>
